@@ -17,7 +17,7 @@ import type { ForecastWeek, RiskLevel } from "../../api/types";
 import { formatDate, formatEurShort, formatEurWhole } from "../../lib/format";
 
 /*
-  Drawn on the navy forecast card (solid navy in light, navy glass in dark), so one palette serves
+  Drawn on the forecast card (solid navy in light, navy glass in dark), so one palette serves
   both themes. SVG attributes can't read CSS variables reliably, so the chart keeps its own palette.
   - Solid periwinkle bar = this week, or a week that already happened (actual).
   - Dashed white outline = forecast.
@@ -90,7 +90,7 @@ function ForecastTooltip({ active, payload, compareLabel }: TooltipContentProps<
   const w = payload[0].payload as Row;
   const gap = w.balanceEur - w.bufferEur;
   return (
-    <div data-theme="light" className="min-w-60 rounded-xl border border-line bg-surface p-3 text-xs text-ink shadow-lg">
+    <div className="liquid-glass-strong min-w-60 rounded-xl p-3 text-xs text-ink">
       <p className="font-semibold">
         W{w.week} · week of {formatDate(w.startDate)}
         {w.isActual && <span className="ml-1.5 font-medium text-ink-soft">(actual)</span>}

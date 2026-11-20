@@ -74,7 +74,7 @@ function NeedsOkSummary({ d, more }: { d: Decision; more: number }) {
   return (
     <section
       aria-labelledby="ok-sum-h"
-      className="glass-strong flex flex-col gap-4 rounded-3xl p-5 sm:flex-row sm:items-center sm:gap-8 sm:px-6"
+      className="liquid-glass-strong flex flex-col gap-4 rounded-3xl p-5 sm:flex-row sm:items-center sm:gap-8 sm:px-6"
     >
       <div className="shrink-0">
         <p className="flex items-center gap-2 text-[14px] font-semibold text-ask">
@@ -110,7 +110,7 @@ function AllClearSummary({ suggestion }: { suggestion?: Decision }) {
   return (
     <section
       aria-labelledby="ok-sum-h"
-      className="glass-strong flex flex-col gap-4 rounded-3xl p-5 sm:flex-row sm:items-center sm:gap-8 sm:px-6"
+      className="liquid-glass-strong flex flex-col gap-4 rounded-3xl p-5 sm:flex-row sm:items-center sm:gap-8 sm:px-6"
     >
       <div className="min-w-0 flex-1">
         <p className="flex items-center gap-2 text-[14px] font-semibold text-safe">
@@ -139,7 +139,7 @@ function AllClearSummary({ suggestion }: { suggestion?: Decision }) {
 function CheckedCard({ at }: { at?: string }) {
   const { latest } = useLive();
   return (
-    <div className="glass flex items-center gap-3 rounded-3xl p-5">
+    <div className="liquid-glass flex items-center gap-3 rounded-3xl p-5">
       <span
         className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-[1.5px] ${
           latest.busy ? "border-link text-link" : "border-line-strong text-ink-soft"
@@ -189,7 +189,7 @@ function Summary({ company, f }: { company: Company; f: Forecast }) {
   return (
     <section aria-labelledby="sum-h">
       <h2 id="sum-h" className="mb-3 text-[15px] font-semibold">Next 13 weeks</h2>
-      <dl className="glass grid grid-cols-2 rounded-3xl lg:grid-cols-4">
+      <dl className="liquid-glass-strong grid grid-cols-2 rounded-3xl lg:grid-cols-4">
         {cells.map((c, i) => (
           <div
             key={c.label}
@@ -246,7 +246,7 @@ export function TodayPage() {
           </>
         ) : (
           <>
-            <h1 id="page-h" className="sr-only">Today</h1>
+            <h1 id="page-h" className="sr-only">Overview</h1>
             <div className="mt-2 h-10 max-w-xl animate-pulse rounded-xl bg-sunk" />
             <div className="mt-3 h-5 max-w-md animate-pulse rounded-lg bg-sunk" />
           </>
@@ -255,7 +255,7 @@ export function TodayPage() {
 
       {/* Hero: full-width forecast, then what needs you */}
       <div className="space-y-4">
-        <section aria-labelledby="chart-h" className="glass-dark min-w-0 rounded-3xl p-5 text-on-hero sm:p-7">
+        <section aria-labelledby="chart-h" className="liquid-glass liquid-navy min-w-0 rounded-3xl p-5 text-on-hero sm:p-7">
           <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
             <div>
               <h2 id="chart-h" className="text-[14px] font-medium tracking-normal text-on-hero/80">
@@ -291,7 +291,7 @@ export function TodayPage() {
 
         <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_20rem]">
           {decisions.isError ? (
-            <p className="glass-strong rounded-3xl p-5 text-short">Couldn't load your items. Check that the backend is running.</p>
+            <p className="liquid-glass-strong rounded-3xl p-5 text-short">Couldn't load your items. Check that the backend is running.</p>
           ) : needsOk[0] ? (
             <NeedsOkSummary d={needsOk[0]} more={needsOk.length - 1} />
           ) : decisions.data ? (

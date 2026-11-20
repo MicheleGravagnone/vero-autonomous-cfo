@@ -42,7 +42,7 @@ export function DisclosureButton({
 /** "How did you decide?" — the business logic behind an item, step by step. */
 export function ReasoningPanel({ decision: d, id }: { decision: Decision; id: string }) {
   return (
-    <div id={id} className="rounded-xl bg-raised/60 p-4">
+    <div id={id} className="glass-inset rounded-xl p-4">
       <ol className="divide-y divide-line">
         {d.reasoning.map((s, i) => {
           const bad = s.passed === false;
@@ -103,7 +103,7 @@ export function EmailPanel({ decision: d, id }: { decision: Decision; id: string
   if (!m) return null;
   const text = english && m.english ? m.english : m;
   return (
-    <div id={id} className="rounded-xl border border-line bg-raised/70 p-4">
+    <div id={id} className="glass-inset rounded-xl border border-line p-4">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <p className="text-xs text-ink-soft">To: {m.to}</p>
         {m.english && (
@@ -114,7 +114,7 @@ export function EmailPanel({ decision: d, id }: { decision: Decision; id: string
                 type="button"
                 aria-pressed={english === en}
                 onClick={() => setEnglish(en)}
-                className={`h-6 rounded-full px-2.5 text-[11px] font-semibold ${english === en ? "btn-primary" : "text-ink-soft hover:bg-raised/70"}`}
+                className={`h-6 rounded-full px-2.5 text-[11px] font-semibold ${english === en ? "btn-primary" : "text-ink-soft hover:glass-inset"}`}
               >
                 {en ? "English" : "Original"}
               </button>

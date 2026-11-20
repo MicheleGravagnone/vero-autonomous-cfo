@@ -40,7 +40,7 @@ export function ContractPage() {
         }}
         onDragLeave={() => setDragging(false)}
         onDrop={onDrop}
-        className="glass glass-hover mt-6 block cursor-pointer rounded-3xl p-2 focus-within:outline-3 focus-within:outline-action"
+        className="liquid-glass liquid-hover mt-6 block cursor-pointer rounded-3xl p-2 focus-within:outline-3 focus-within:outline-action"
       >
         <input type="file" accept=".pdf,.docx,.txt" className="sr-only" onChange={(e) => onFile(e.target.files?.[0])} />
         <span
@@ -55,10 +55,10 @@ export function ContractPage() {
       </label>
       <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-ink-soft">
         <span>Demo documents:</span>
-        <button type="button" onClick={() => demo("Mietvertrag_Main_Street.pdf")} className="glass-chip h-8 rounded-full px-3 font-medium text-ink hover:bg-raised">
+        <button type="button" onClick={() => demo("Mietvertrag_Main_Street.pdf")} className="liquid-glass-pill h-8 rounded-full px-3 font-medium text-ink">
           Lease (Mietvertrag)
         </button>
-        <button type="button" onClick={() => demo("Catering_Rhein-Main_Event.pdf")} className="glass-chip h-8 rounded-full px-3 font-medium text-ink hover:bg-raised">
+        <button type="button" onClick={() => demo("Catering_Rhein-Main_Event.pdf")} className="liquid-glass-pill h-8 rounded-full px-3 font-medium text-ink">
           Summer catering contract
         </button>
         <span>A file name with “lease” or “Miet” is read as a lease.</span>
@@ -87,7 +87,7 @@ function LeaseResult({ r }: { r: LeaseCheck }) {
       <h2 id="lease-h" className="text-xl font-semibold leading-snug">
         Lease read and registered: {l.landlord}
       </h2>
-      <dl className="glass-strong grid overflow-hidden rounded-3xl sm:grid-cols-2">
+      <dl className="liquid-glass-strong grid overflow-hidden rounded-3xl sm:grid-cols-2">
         {[
           { k: "Monthly rent", v: formatEur(l.monthlyRentEur) },
           { k: "Since", v: formatLongDate(l.startDate) },
@@ -100,7 +100,7 @@ function LeaseResult({ r }: { r: LeaseCheck }) {
           </div>
         ))}
       </dl>
-      <div className="glass-strong flex flex-col gap-3 rounded-3xl p-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+      <div className="liquid-glass flex flex-col gap-3 rounded-3xl p-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div>
           <p className="text-[15px] font-semibold">Vero will now check your rent against this lease.</p>
           <p className="mt-0.5 text-[13px] text-ink-soft">
@@ -139,7 +139,7 @@ function ContractResult({ sim }: { sim: ContractSimulation }) {
           {t.paymentTermDays} days later and with {t.advancePct}% up front. You'd pay {formatEurWhole(t.costEur)} for food and
           staff first, so your lowest point becomes {formatEurWhole(sim.minBalanceEur)} in W{sim.valleyWeek}.
         </p>
-        <div className="glass-dark mt-4 space-y-3 rounded-3xl p-5 text-on-hero sm:p-6">
+        <div className="liquid-glass liquid-navy mt-4 space-y-3 rounded-3xl p-5 text-on-hero sm:p-6">
           <ChartLegend compareLabel="Without this contract" />
           <CashChart
             weeks={sim.withContract}
@@ -153,7 +153,7 @@ function ContractResult({ sim }: { sim: ContractSimulation }) {
       <section aria-labelledby="fix-h">
         <h2 id="fix-h" className="text-lg font-semibold tracking-tight">How to make it safe</h2>
         <p className="mt-2 max-w-[70ch] text-sm">{sim.suggestion}</p>
-        <div className="glass-dark mt-4 space-y-3 rounded-3xl p-5 text-on-hero sm:p-6">
+        <div className="liquid-glass liquid-navy mt-4 space-y-3 rounded-3xl p-5 text-on-hero sm:p-6">
           <ChartLegend compareLabel="As written" />
           <CashChart
             weeks={sim.withSuggestion}
@@ -178,11 +178,11 @@ function ContractResult({ sim }: { sim: ContractSimulation }) {
             </label>
           )}
         </div>
-        <div className="glass-strong mt-4 rounded-3xl p-5">
+        <div className="liquid-glass-strong mt-4 rounded-3xl p-5">
           <p className="text-sm text-ink-soft">To: {sim.counterProposal.to}</p>
           <p className="font-semibold">{msg.subject}</p>
           <label htmlFor="email-body" className="sr-only">Email text</label>
-          <textarea key={String(english)} id="email-body" className="mt-3 h-56 w-full rounded-xl border border-line bg-raised/70 p-4" defaultValue={msg.body} />
+          <textarea key={String(english)} id="email-body" className="glass-inset mt-3 h-56 w-full rounded-xl border border-line p-4" defaultValue={msg.body} />
           <button
             className="btn-primary mt-4 h-10 rounded-full px-5 text-[14px] font-semibold"
             onClick={async () => {

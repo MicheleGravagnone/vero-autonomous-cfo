@@ -12,7 +12,7 @@ const toneClass = { neutral: "text-ink", good: "text-safe", bad: "text-short" } 
 export const btnPrimary =
   "inline-flex h-10 items-center justify-center rounded-full btn-primary px-5 text-[14px] font-semibold disabled:opacity-60";
 export const btnQuiet =
-  "inline-flex h-10 items-center justify-center rounded-full px-5 text-[14px] font-semibold text-ink-soft hover:bg-chip hover:text-ink disabled:opacity-60";
+  "inline-flex h-10 items-center justify-center rounded-full px-5 text-[14px] font-semibold text-ink-soft hover:glass-inset hover:text-ink disabled:opacity-60";
 
 /** Approve / reject with toasts. Shared by the card and the hero summary. */
 export function useDecide(d: Decision) {
@@ -47,7 +47,7 @@ export function DecisionCard({ decision: d }: { decision: Decision }) {
       id={cardId(d.id)}
       tabIndex={-1}
       aria-labelledby={`h-${d.id}`}
-      className={`${arrived.has(d.id) ? "arrive" : ""} glass-strong scroll-mt-32 overflow-hidden rounded-3xl sm:scroll-mt-24 `}
+      className={`${arrived.has(d.id) ? "arrive" : ""} liquid-glass-strong scroll-mt-32 overflow-hidden rounded-3xl sm:scroll-mt-24 `}
     >
       <div className="px-5 pt-5 sm:px-6">
         <div className="flex flex-wrap items-center gap-2">
@@ -75,7 +75,7 @@ export function DecisionCard({ decision: d }: { decision: Decision }) {
 
       {facts.length > 0 && (
         <dl
-          className="mx-5 mt-4 grid rounded-xl bg-raised/60 sm:mx-6"
+          className="glass-inset mx-5 mt-4 grid rounded-xl sm:mx-6"
           style={{ gridTemplateColumns: `repeat(${facts.length}, minmax(0, 1fr))` }}
         >
           {facts.map((f) => (

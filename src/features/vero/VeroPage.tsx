@@ -57,7 +57,7 @@ export function VeroPage() {
         </p>
       </section>
 
-      <dl className="glass grid grid-cols-2 rounded-3xl lg:grid-cols-4">
+      <dl className="liquid-glass grid grid-cols-2 rounded-3xl lg:grid-cols-4">
         {[
           { k: "Changes checked", v: String(quiet + all.length), sub: "This month" },
           { k: "Handled quietly", v: String(quiet), sub: "Explained by the evidence, no alert" },
@@ -98,10 +98,10 @@ export function VeroPage() {
           )}
         </div>
 
-        {findings.isError && <p className="glass-strong rounded-3xl p-5 text-short">Couldn't load the cost checks. Check that the backend is running.</p>}
+        {findings.isError && <p className="liquid-glass-strong rounded-3xl p-5 text-short">Couldn't load the cost checks. Check that the backend is running.</p>}
         {findings.isLoading && <div className="h-40 animate-pulse rounded-3xl bg-sunk" />}
         {findings.data && shown.length === 0 && (
-          <div className="glass-strong flex items-start gap-3 rounded-3xl p-6">
+          <div className="liquid-glass flex items-start gap-3 rounded-3xl p-6">
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-safe-tint text-safe">
               <Icon name="check" size={15} />
             </span>
@@ -156,7 +156,7 @@ function KnownDocuments({ docs, highlight }: { docs: KnownDocument[]; highlight:
                 to={on ? "/costs" : `/costs?doc=${encodeURIComponent(d.doc_id)}`}
                 aria-current={on ? "true" : undefined}
                 className={`arrive inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs ${
-                  on ? "btn-primary" : "glass-chip hover:bg-raised"
+                  on ? "btn-primary" : "liquid-glass-pill"
                 }`}
               >
                 <Icon name="file" size={12} className={on ? "opacity-70" : "text-ink-soft"} />
@@ -187,7 +187,7 @@ function Digest() {
         <h2 id="digest-h" className="text-[20px] font-semibold">Handled quietly</h2>
         <p className="text-[13px] text-ink-soft">Costs that changed, and the evidence that explains them. No action needed.</p>
       </div>
-      <ul className="glass-strong divide-y divide-line overflow-hidden rounded-3xl">
+      <ul className="liquid-glass-strong divide-y divide-line overflow-hidden rounded-3xl">
         {data.map((r) => (
           <li key={r.id} className="px-5 py-4 sm:px-6">
             <div className="flex flex-wrap items-center gap-2">
@@ -197,7 +197,7 @@ function Digest() {
             <p className="mt-1.5 text-[14px] font-semibold">{r.title}</p>
             <p className="text-[13px] text-ink-soft">{r.detail}</p>
             {r.calc && (
-              <ul className="mt-2 space-y-0.5 rounded-lg bg-raised/60 px-3 py-2 font-mono text-[11px] text-ink-soft">
+              <ul className="glass-inset mt-2 space-y-0.5 rounded-lg px-3 py-2 font-mono text-[11px] text-ink-soft">
                 {r.calc.map((c) => (
                   <li key={c} className="whitespace-pre-wrap">{c}</li>
                 ))}
@@ -221,9 +221,9 @@ function CostMemory() {
         <h2 id="mem-h" className="text-[20px] font-semibold">Cost Memory</h2>
         <p className="text-[13px] text-ink-soft">Monthly totals from your bank statement since January. April runs to the 13th.</p>
       </div>
-      <div className="glass-strong overflow-x-auto rounded-3xl">
+      <div className="liquid-glass-strong overflow-x-auto rounded-3xl">
         <table className="w-full min-w-[600px] text-[13px]">
-          <thead className="border-b border-line bg-raised/60 text-xs text-ink-soft">
+          <thead className="glass-inset border-b border-line text-xs text-ink-soft">
             <tr>
               <th scope="col" className="px-5 py-2 text-left font-medium">Cost</th>
               {months.map((m) => (

@@ -50,7 +50,7 @@ export function ActivityPage() {
       {isError && <p className="mt-6 text-short">Couldn't load the activity. Check that the backend is running.</p>}
 
       {data && (
-        <ol className="glass-strong mt-6 divide-y divide-line overflow-hidden rounded-3xl">
+        <ol className="liquid-glass-strong mt-6 divide-y divide-line overflow-hidden rounded-3xl">
           {entries.map((e) => (
             <li key={e.seq} className="grid gap-x-6 gap-y-2 px-5 py-4 sm:grid-cols-[9rem_minmax(0,1fr)]">
               <div className="text-sm text-ink-soft">

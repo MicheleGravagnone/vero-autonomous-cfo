@@ -25,7 +25,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
           <div
             key={t.id}
             role="status"
-            className="toast-in pointer-events-auto flex max-w-xl items-start gap-3 glass-dark rounded-3xl px-4 py-3 text-sm text-on-hero"
+            className="toast-in pointer-events-auto flex max-w-xl items-start gap-3 liquid-glass liquid-panel rounded-3xl px-4 py-3 text-sm text-on-hero"
           >
             {t.tone === "done" && <Icon name="check" className="mt-0.5 text-safe-tint" />}
             <p className="flex-1">{t.message}</p>

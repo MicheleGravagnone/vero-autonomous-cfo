@@ -31,7 +31,7 @@ export function FindingView({ finding: f }: { finding: Finding }) {
 
   return (
     <div className="space-y-4">
-      <section aria-labelledby={`inv-h-${f.finding_id}`} className="glass-strong rounded-3xl p-5 sm:p-6">
+      <section aria-labelledby={`inv-h-${f.finding_id}`} className="liquid-glass-strong rounded-3xl p-5 sm:p-6">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
             <p className="flex items-center gap-1.5 text-xs text-ink-soft">
@@ -55,7 +55,7 @@ export function FindingView({ finding: f }: { finding: Finding }) {
           </div>
         </div>
 
-        <dl className="mt-4 grid grid-cols-3 rounded-xl bg-raised/60">
+        <dl className="glass-inset mt-4 grid grid-cols-3 rounded-xl">
           {[
             { k: "Paid until now", v: eur(li.previous_value) },
             { k: "Asked for", v: eur(li.current_value), bad: true },
@@ -92,7 +92,7 @@ export function FindingView({ finding: f }: { finding: Finding }) {
       </section>
 
       {f.evidence_request && (
-        <section className="glass-strong flex flex-col gap-3 rounded-3xl p-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <section className="liquid-glass-strong flex flex-col gap-3 rounded-3xl p-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <div>
             <p className="flex items-center gap-1.5 text-[11px] font-semibold text-ask">
               <Icon name="search" size={12} /> Needs evidence
@@ -120,7 +120,7 @@ function Trace({ steps, running, visible }: { steps: TraceStep[]; running: boole
   if (!visible) return null;
   const sorted = [...steps].sort((a, b) => a.step - b.step);
   return (
-    <section aria-labelledby="trace-h" className="glass-strong rounded-3xl p-5 sm:p-7">
+    <section aria-labelledby="trace-h" className="liquid-glass-strong rounded-3xl p-5 sm:p-7">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 id="trace-h" className="text-[20px] font-semibold">How Vero found out</h2>
         <p className="text-[11px] text-ink-soft">
@@ -129,7 +129,7 @@ function Trace({ steps, running, visible }: { steps: TraceStep[]; running: boole
       </div>
       <ol className="mt-5 space-y-2" aria-live="polite">
         {sorted.map((s) => (
-          <li key={s.step} className="flex gap-4 rounded-xl bg-raised/70 p-3 sm:p-4">
+          <li key={s.step} className="glass-inset flex gap-4 rounded-xl p-3 sm:p-4">
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-navy text-sand">
               <Icon name={TOOL_ICON[s.tool]} size={15} />
             </span>
@@ -147,7 +147,7 @@ function Trace({ steps, running, visible }: { steps: TraceStep[]; running: boole
           </li>
         ))}
         {running && (
-          <li className="flex gap-4 rounded-xl bg-raised/70 p-3 sm:p-4">
+          <li className="glass-inset flex gap-4 rounded-xl p-3 sm:p-4">
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-dashed border-line-strong">
               <span className="h-2 w-2 animate-pulse rounded-full bg-ask" aria-hidden="true" />
             </span>
@@ -217,7 +217,7 @@ function Outcome({ finding }: { finding: Finding }) {
                 type="button"
                 aria-pressed={right === d.doc_id}
                 onClick={() => setRight(d.doc_id)}
-                className={`h-8 rounded-full px-3 text-xs font-medium ${right === d.doc_id ? "btn-primary" : "text-ink-soft hover:bg-raised/70"}`}
+                className={`h-8 rounded-full px-3 text-xs font-medium ${right === d.doc_id ? "btn-primary" : "text-ink-soft hover:glass-inset"}`}
               >
                 {d.type === "lease" ? `Lease ${d.clause ?? ""}` : d.type === "statement" ? "Bank statement" : d.doc_id}
               </button>
@@ -236,9 +236,9 @@ function Outcome({ finding }: { finding: Finding }) {
 
       <section aria-labelledby="prop-h">
         <h2 id="prop-h" className="mb-3 text-[20px] font-semibold">What changes downstream</h2>
-        <div className="glass-strong overflow-x-auto rounded-3xl">
+        <div className="liquid-glass-strong overflow-x-auto rounded-3xl">
           <table className="w-full min-w-[520px] text-[13px]">
-            <thead className="border-b border-line bg-raised/60 text-left text-xs text-ink-soft">
+            <thead className="glass-inset border-b border-line text-left text-xs text-ink-soft">
               <tr>
                 <th scope="col" className="px-4 py-2 font-medium sm:px-5">Where</th>
                 <th scope="col" className="px-4 py-2 font-medium">Note</th>
@@ -260,13 +260,13 @@ function Outcome({ finding }: { finding: Finding }) {
         </div>
       </section>
 
-      <section aria-labelledby="act-h" className="glass-strong rounded-3xl p-5 sm:p-6">
+      <section aria-labelledby="act-h" className="liquid-glass-strong rounded-3xl p-5 sm:p-6">
         <p className="flex items-center gap-1.5 text-[11px] font-semibold text-ask">
           <span className="h-2 w-2 rounded-full bg-sand" aria-hidden="true" />
           {resolved ? "Approved · simulated" : "Needs your OK"}
         </p>
         <h2 id="act-h" className="mt-2 text-[20px] font-semibold">Prepared actions</h2>
-        <ul className="mt-3 divide-y divide-sand/40 rounded-xl bg-raised/60">
+        <ul className="glass-inset mt-3 divide-y divide-sand/40 rounded-xl">
           {finding.recommended_actions.map((a) => (
             <ActionRow key={a.type} a={a} resolved={resolved} checked={!!selected[a.type]} onCheck={(v) => setSelected((s) => ({ ...s, [a.type]: v }))} />
           ))}
@@ -328,7 +328,7 @@ function ActionRow({ a, resolved, checked, onCheck }: { a: RecommendedAction; re
             <Icon name="chevron" size={13} className={open ? "rotate-180" : ""} />
           </button>
           {open && (
-            <div className="mt-2 rounded-xl border border-line bg-raised/70 p-4">
+            <div className="glass-inset mt-2 rounded-xl border border-line p-4">
               <div className="mb-2 flex items-center gap-1">
                 {(["de", "en"] as const).map((l) => (
                   <button
@@ -336,7 +336,7 @@ function ActionRow({ a, resolved, checked, onCheck }: { a: RecommendedAction; re
                     type="button"
                     aria-pressed={lang === l}
                     onClick={() => setLang(l)}
-                    className={`h-6 rounded-full px-2.5 text-[11px] font-semibold uppercase ${lang === l ? "btn-primary" : "text-ink-soft hover:bg-raised/70"}`}
+                    className={`h-6 rounded-full px-2.5 text-[11px] font-semibold uppercase ${lang === l ? "btn-primary" : "text-ink-soft hover:glass-inset"}`}
                   >
                     {l}
                   </button>

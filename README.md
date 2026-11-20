@@ -28,7 +28,7 @@ so the backend does **not** need CORS and has no `/api` prefix in its routes.
 
 | Route | What it shows |
 |---|---|
-| `/` Today | One status sentence, 13-week cash chart (W1–W13), **Needs your OK**, **Suggestions**, **Done and checked** |
+| `/` Overview | One status sentence, 13-week cash chart (W1–W13), **Needs your OK**, **Suggestions**, **Done and checked** |
 | `/contract` | The only upload. Customer contract → cash impact → safer terms → email draft. Lease → registered for Vero |
 | `/costs` | Vero, the cost check: findings with a live investigation trace, evidence, prepared actions. `?doc=<id>` filters by document |
 | `/activity` | Sealed (hash-chained) history of everything agents and the owner did |
@@ -45,7 +45,7 @@ reduced motion respected.
 All shapes: `src/api/types.ts` (copy in `../docs/api-contract.ts`).
 
 Mock mode replays **Pizzeria Amalfi's 2025 bank statement** (`../data/samples/`, imported via the `@samples` alias).
-Demo date: Monday 14 April 2025; agents only see transactions before it.
+The demo replays 2025 from Monday 14 April; agents only see transactions before that date.
 
 - `src/api/mock/statement.ts`: CSV parser, daily balances, weekly forecast (mock forecast = 2025 actuals + approved decisions)
 - `src/api/mock/index.ts`: CFO story (Cash, Currency, Tax agents), contract check, presenter events

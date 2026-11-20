@@ -27,7 +27,7 @@ export function DemoPanel() {
   };
 
   return (
-    <div className="fixed bottom-4 left-4 z-40 glass-dark w-60 rounded-3xl p-3 text-on-hero">
+    <div className="fixed bottom-4 left-4 z-40 liquid-glass liquid-panel w-60 rounded-3xl p-3 text-on-hero">
       <button onClick={() => setOpen((o) => !o)} aria-expanded={open} className="w-full text-left text-sm text-on-hero/70">
         Presenter controls {open ? "▾" : "▸"}
       </button>
@@ -38,7 +38,7 @@ export function DemoPanel() {
               key={b.scenario}
               disabled={running !== null}
               onClick={() => run(b.scenario)}
-              className="rounded-full bg-on-hero/10 px-3 py-2 text-left text-sm font-semibold hover:bg-on-hero/20 disabled:opacity-50"
+              className="liquid-glass-pill rounded-full px-3 py-2 text-left text-sm font-semibold disabled:opacity-50"
             >
               {running === b.scenario ? "Running…" : b.label}
             </button>

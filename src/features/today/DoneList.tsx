@@ -28,9 +28,9 @@ const th = "px-4 py-2 text-left text-xs font-medium text-ink-soft sm:px-5";
 /** Compact table of things already handled: done by the agent, checks, and the owner's decisions. */
 export function DoneList({ items }: { items: Decision[] }) {
   return (
-    <div className="glass-strong overflow-hidden rounded-3xl">
+    <div className="liquid-glass-strong overflow-hidden rounded-3xl">
       <table className="w-full table-fixed border-collapse">
-        <thead className="border-b border-line bg-raised/60">
+        <thead className="glass-inset border-b border-line">
           <tr>
             <th scope="col" className={`${th} hidden w-32 sm:table-cell`}>Date</th>
             <th scope="col" className={`${th} hidden w-36 md:table-cell`}>Agent</th>

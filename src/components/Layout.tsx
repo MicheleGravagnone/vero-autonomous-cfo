@@ -1,16 +1,65 @@
-import { NavLink, Outlet, useSearchParams } from "react-router-dom";
+import { useEffect, useLayoutEffect, useRef } from "react";
+import { NavLink, Outlet, useLocation, useSearchParams } from "react-router-dom";
 import { useCompany } from "../api/queries";
 import { useLive } from "../api/live";
-import { USE_MOCK } from "../api/client";
 import { DemoPanel } from "../features/demo/DemoPanel";
-import { formatLongDate } from "../lib/format";
 import { useTheme } from "../lib/theme";
 import { Icon } from "./Icon";
+import { Wordmark } from "./Logo";
+import { dismissBootSplash } from "../lib/bootSplash";
 
+// The active tab has no fill of its own: the sliding pill behind it shows which one is active.
 const navClass = ({ isActive }: { isActive: boolean }) =>
-  `inline-flex h-10 items-center whitespace-nowrap rounded-full px-4 text-[15px] font-medium transition-colors ${
-    isActive ? "btn-primary" : "text-ink hover:bg-chip"
+  `nav-tab relative z-10 inline-flex h-10 items-center whitespace-nowrap rounded-full px-4 text-[15px] font-medium ${
+    isActive ? "text-[color:var(--primary-ink)]" : "text-ink hover:bg-chip"
   }`;
+
+/** Main tabs, with a pill that slides to the active tab. */
+function NavTabs() {
+  const navRef = useRef<HTMLElement>(null);
+  const pillRef = useRef<HTMLSpanElement>(null);
+  const { pathname } = useLocation();
+
+  useLayoutEffect(() => {
+    const nav = navRef.current;
+    const pill = pillRef.current;
+    if (!nav || !pill) return;
+    const place = () => {
+      const active = nav.querySelector<HTMLElement>('a[aria-current="page"]');
+      if (!active) {
+        pill.style.opacity = "0";
+        return;
+      }
+      pill.style.width = `${active.offsetWidth}px`;
+      pill.style.transform = `translateX(${active.offsetLeft}px)`;
+      pill.style.opacity = "1";
+    };
+    place();
+    // Animate only after the first placement, so the pill doesn't fly in on page load.
+    const ready = requestAnimationFrame(() => pill.classList.add("nav-pill-ready"));
+    const ro = new ResizeObserver(place);
+    ro.observe(nav);
+    document.fonts?.ready.then(place);
+    return () => {
+      cancelAnimationFrame(ready);
+      ro.disconnect();
+    };
+  }, [pathname]);
+
+  return (
+    <nav
+      ref={navRef}
+      aria-label="Main"
+      className="liquid-glass-pill col-span-2 row-start-2 flex gap-1 justify-self-start overflow-x-auto rounded-full p-1 max-lg:max-w-full lg:col-span-1 lg:row-start-1 lg:col-start-2"
+    >
+      <span ref={pillRef} aria-hidden="true" className="nav-pill btn-primary pill-recessed absolute left-0 top-1 h-10 rounded-full opacity-0" />
+      <NavLink to="/" end className={navClass}>Overview</NavLink>
+      <NavLink to="/contract" className={navClass}>Contract check</NavLink>
+      <NavLink to="/costs" className={navClass}>Cost changes</NavLink>
+      <NavLink to="/activity" className={navClass}>Activity</NavLink>
+    </nav>
+  );
+}
 
 const connectionText = { live: "Connected", connecting: "Connecting…", offline: "Offline" } as const;
 
@@ -21,11 +70,16 @@ function initials(name?: string) {
 }
 
 export function Layout() {
-  const { data: company } = useCompany();
+  const { data: company, isPending } = useCompany();
   const { connection } = useLive();
   const { theme, toggle } = useTheme();
   const [params] = useSearchParams();
   const showDemo = params.get("demo") === "1";
+
+  // First data in (or failed): fade out the loading screen from index.html.
+  useEffect(() => {
+    if (!isPending) dismissBootSplash();
+  }, [isPending]);
 
   const dot = connection === "live" ? "bg-safe" : connection === "connecting" ? "bg-tight" : "bg-short";
 
@@ -38,35 +92,13 @@ export function Layout() {
         Skip to content
       </a>
 
-      <header className="glass-bar sticky top-0 z-30">
+      <header className="glass-1-bar sticky top-0 z-30">
         <div className="mx-auto grid max-w-6xl grid-cols-[1fr_auto] items-center gap-y-2 px-4 py-3 sm:px-8 lg:min-h-20 lg:grid-cols-[1fr_auto_1fr] lg:py-5">
           <div className="flex items-center gap-2 lg:pr-4">
-            <span className="whitespace-nowrap text-[24px] font-semibold tracking-[-0.02em]">Vero</span>
-            <span
-              title={`Demo mode: actions are simulated, no money moves.${USE_MOCK ? " Mock data." : ""}`}
-              className="glass-chip whitespace-nowrap rounded-full px-3 py-1 text-[13px] font-medium text-ink-soft"
-            >
-              Simulation
-            </span>
-            {company && (
-              <span
-                title="The demo replays 2025. Agents only see transactions before this date."
-                className="hidden whitespace-nowrap rounded-full bg-cream px-2.5 py-1 text-[12px] font-semibold text-ask sm:inline"
-              >
-                Demo date: {formatLongDate(company.asOf)}
-              </span>
-            )}
+            <Wordmark className="text-[24px]" />
           </div>
 
-          <nav
-            aria-label="Main"
-            className="col-span-2 row-start-2 -mx-1 flex gap-1 overflow-x-auto lg:col-span-1 lg:row-start-1 lg:col-start-2 lg:mx-0"
-          >
-            <NavLink to="/" end className={navClass}>Today</NavLink>
-            <NavLink to="/contract" className={navClass}>Contract check</NavLink>
-            <NavLink to="/costs" className={navClass}>Cost changes</NavLink>
-            <NavLink to="/activity" className={navClass}>Activity</NavLink>
-          </nav>
+          <NavTabs />
 
           <div className="flex min-w-0 items-center justify-end gap-2.5">
             <button
@@ -74,13 +106,13 @@ export function Layout() {
               onClick={toggle}
               aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
               title={theme === "dark" ? "Light theme" : "Dark theme"}
-              className="glass-chip flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-ink-soft hover:text-ink"
+              className="nav-tab liquid-glass-pill flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-ink-soft hover:text-ink"
             >
-              <Icon name={theme === "dark" ? "sun" : "moon"} size={16} />
+              <Icon key={theme} name={theme === "dark" ? "sun" : "moon"} size={16} className="icon-in" />
             </button>
             <span className="hidden truncate text-[15px] font-semibold sm:inline">{company?.name ?? "Loading…"}</span>
             <span
-              className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full avatar text-[13px] font-semibold"
+              className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full liquid-glass-pill avatar text-[13px] font-semibold"
               title={`${company?.name ?? ""} · ${connectionText[connection]}`}
             >
               {initials(company?.name)}
@@ -92,11 +124,6 @@ export function Layout() {
             </span>
           </div>
         </div>
-        {company && (
-          <p className="border-t border-sand/50 bg-cream px-4 py-1.5 text-center text-[11px] font-semibold text-ask sm:hidden">
-            Demo date: {formatLongDate(company.asOf)}
-          </p>
-        )}
       </header>
 
       <main id="main" className="mx-auto max-w-6xl px-4 py-8 sm:px-8 sm:py-10">
