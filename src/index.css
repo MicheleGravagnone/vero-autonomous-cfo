@@ -1,0 +1,291 @@
+@import "@fontsource/plus-jakarta-sans/400.css";
+@import "@fontsource/plus-jakarta-sans/500.css";
+@import "@fontsource/plus-jakarta-sans/600.css";
+@import "@fontsource/plus-jakarta-sans/700.css";
+@import "tailwindcss";
+
+/*
+  Vero design tokens, light and dark.
+  - The theme lives on <html data-theme="light|dark"> (index.html sets it before first paint,
+    lib/theme.ts toggles it). Every colour is a variable, so components never need dark: variants.
+  - Spec names (--bg, --text, --surface, --hero, --chip, --primary, --ok, --ask …) are defined per
+    theme below; @theme maps them to the Tailwind names the components use (paper, ink, sand …).
+  - Status colours have two shades where needed: the dot uses the spec colour, the text uses a
+    darker one in light mode so it keeps 4.5:1 (e.g. --ask #d9a43a dot, --ask-text #8a6414 text).
+  - Surfaces: `glass` / `glass-strong` (cards), `glass-dark` (forecast card, toasts, presenter panel),
+    `glass-bar` (header), `glass-chip` (chips, toggles), `btn-primary` / `btn-strong` (pill buttons).
+    Inside a glass card, use bg-raised/60 (never blur inside blur).
+  - Plus Jakarta Sans, tabular figures for every amount. Cards 24px radius, buttons are pills.
+*/
+@theme inline {
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-paper: var(--bg);
+  --color-surface: var(--surface-solid); /* tooltips, inputs, focus chips */
+  --color-raised: var(--raised);         /* inner sections inside a glass card */
+  --color-sunk: var(--sunk);             /* skeletons */
+  --color-chip: var(--chip);
+  --color-ink: var(--text);
+  --color-ink-soft: var(--text-muted);
+  --color-ink-muted: var(--text-faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-on-hero: var(--on-hero);       /* text on the navy forecast card, toasts, presenter panel */
+
+  --color-navy: var(--badge);            /* filled badges with white text */
+  --color-link: var(--link);
+  --color-action: var(--focus);
+  --color-action-tint: var(--action-tint);
+
+  --color-sand: var(--ask);              /* "needs your OK" dot and highlight */
+  --color-cream: var(--ask-tint);
+  --color-ask: var(--ask-text);
+  --color-on-fill: var(--on-fill);
+
+  --color-safe: var(--ok-text);
+  --color-safe-tint: var(--ok-tint);
+  --color-tight: var(--tight);
+  --color-tight-tint: var(--tight-tint);
+  --color-short: var(--short);
+  --color-short-tint: var(--short-tint);
+}
+
+/* ───────────── Light ───────────── */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f3f4f7;
+  --text: #1b2547;
+  --text-muted: #535a6e;   /* spec #5d6478, darkened one step: 4.5:1 over the darkest silk folds */
+  --text-faint: #5d6576;
+  --surface: rgb(255 255 255 / 0.72);
+  --surface-strong: rgb(255 255 255 / 0.8);
+  --surface-border: rgb(255 255 255 / 0.9);
+  --surface-shadow: 0 10px 40px rgb(27 37 71 / 0.06);
+  --surface-solid: #ffffff;
+  --hero: #1c2748;
+  --hero-border: transparent;
+  --chip: rgb(27 37 71 / 0.06);
+  --primary: #1c2748;
+  --primary-ink: #ffffff;
+  --primary-dark: #1c2748;
+  --primary-dark-ink: #ffffff;
+  --ok: #1f8a4c;
+  --ok-text: #18753f;      /* #1f8a4c is 3.8:1 as text on a card */
+  --ok-tint: #e3f2e9;
+  --ask: #d9a43a;
+  --ask-text: #8a6414;     /* #d9a43a is 2:1 as text on white */
+  --ask-tint: #fbf3df;
+
+  --raised: #ffffff;
+  --sunk: #e9ebf0;
+  --line: #e0e2e8;
+  --line-strong: #c8cbd4;
+  --divider: rgb(27 37 71 / 0.08);
+  --header-bg: rgb(243 244 247 / 0.72);
+  --on-hero: #ffffff;
+  --badge: #1c2748;
+  --link: #1c2748;
+  --focus: #1c2748;
+  --action-tint: #e8eaf2;
+  --on-fill: #ffffff;
+  --tight: #8a6414;
+  --tight-tint: #fbf3df;
+  --short: #b3402b;
+  --short-tint: #fbe9e5;
+  --avatar-bg: var(--chip);
+  --avatar-ink: var(--text);
+
+  /* Background: the white silk photo, softened toward the #f3f4f7 base so text over it stays readable. */
+  --page-bg: linear-gradient(rgb(243 244 247 / 0.35), rgb(243 244 247 / 0.35)), url("/bg-silk.webp") center / cover no-repeat, #f3f4f7;
+  --page-filter: none;
+  --page-tint: transparent;
+}
+
+/* ───────────── Dark ───────────── */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0e1a35;
+  --text: #f4f5f9;
+  --text-muted: rgb(244 245 249 / 0.72);
+  --text-faint: rgb(244 245 249 / 0.6);
+  --surface: rgb(255 255 255 / 0.045);
+  --surface-strong: rgb(255 255 255 / 0.06);
+  --surface-border: rgb(255 255 255 / 0.1);
+  --surface-shadow: 0 10px 40px rgb(0 0 0 / 0.25);
+  --surface-solid: #16244a;
+  --hero: rgb(255 255 255 / 0.045); /* the forecast card is glass, like the other cards */
+  --hero-border: rgb(255 255 255 / 0.1);
+  --chip: rgb(255 255 255 / 0.08);
+  --primary: #f5f1e8;
+  --primary-ink: #13224a;
+  --primary-dark: #0b1328;
+  --primary-dark-ink: #ffffff;
+  --ok: #3ccf86;
+  --ok-text: #3ccf86;
+  --ok-tint: rgb(60 207 134 / 0.14);
+  --ask: #f1c44f;
+  --ask-text: #f1c44f;
+  --ask-tint: rgb(241 196 79 / 0.13);
+
+  --raised: #1b2a52;
+  --sunk: #18264b;
+  --line: rgb(255 255 255 / 0.1);
+  --line-strong: rgb(255 255 255 / 0.18);
+  --divider: rgb(255 255 255 / 0.1);
+  --header-bg: rgb(14 26 53 / 0.6);
+  --on-hero: #ffffff;
+  --badge: #2c3d6b;
+  --link: #f1c44f;
+  --focus: #f1c44f;
+  --action-tint: rgb(255 255 255 / 0.08);
+  --on-fill: #13224a;
+  --tight: #f1c44f;
+  --tight-tint: rgb(241 196 79 / 0.13);
+  --short: #ff8a75;
+  --short-tint: rgb(255 138 117 / 0.14);
+  --avatar-bg: #5a4426;
+  --avatar-ink: #f5f1e8;
+
+  /* Background: the same silk, inverted so its folds become soft light streaks, tinted navy above. */
+  --page-bg: url("/bg-silk.webp") center / cover no-repeat;
+  --page-filter: invert(1) brightness(0.5);
+  --page-tint: #0c1834;
+}
+
+/* Shared: radii. Cards use rounded-3xl (24px), buttons rounded-full. */
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Background layer: fixed, so it never moves on scroll (also on iOS). */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--page-bg);
+  filter: var(--page-filter);
+}
+/* A colour layer that tints the background (navy in dark mode, nothing in light mode). */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--page-tint);
+  mix-blend-mode: screen;
+}
+
+/* Cards. The blur is written literally: the minifier drops var() blur values. */
+@utility glass {
+  background: var(--surface);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid var(--surface-border);
+  box-shadow: var(--surface-shadow);
+}
+@utility glass-strong {
+  background: var(--surface-strong);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid var(--surface-border);
+  box-shadow: var(--surface-shadow);
+}
+/* Forecast card, toasts, presenter panel: solid navy in light, glass in dark. White text. */
+@utility glass-dark {
+  background: var(--hero);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid var(--hero-border);
+  box-shadow: var(--surface-shadow);
+}
+/* Header: transparent with blur and a 1px divider. */
+@utility glass-bar {
+  background: var(--header-bg);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  border-bottom: 1px solid var(--divider);
+}
+/* Chips, toggles and small secondary pills: flat tint, no blur of their own. */
+@utility glass-chip {
+  background: var(--chip);
+}
+/* Pill buttons: primary (navy / cream) and strong (navy / near-black, e.g. "See suggestion"). */
+@utility btn-primary {
+  background: var(--primary);
+  color: var(--primary-ink);
+  transition: filter 150ms ease;
+  &:hover { filter: brightness(1.08); }
+}
+@utility btn-strong {
+  background: var(--primary-dark);
+  color: var(--primary-dark-ink);
+  transition: filter 150ms ease;
+  &:hover { filter: brightness(1.15); }
+}
+@utility glass-hover {
+  transition: background-color 150ms ease;
+  &:hover { background: var(--surface-strong); }
+}
+@utility avatar {
+  background: var(--avatar-bg);
+  color: var(--avatar-ink);
+}
+
+/* No blur support, or "Reduce transparency": solid surfaces (light #ffffff, dark #16244a).
+   The background photo stays: it is not transparency. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root { --surface: #ffffff; --surface-strong: #ffffff; --header-bg: #f3f4f7; }
+  :root[data-theme="dark"] { --surface: #16244a; --surface-strong: #16244a; --hero: #16244a; --header-bg: #0e1a35; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  :root { --surface: #ffffff; --surface-strong: #ffffff; --header-bg: #f3f4f7; }
+  :root[data-theme="dark"] { --surface: #16244a; --surface-strong: #16244a; --hero: #16244a; --header-bg: #0e1a35; }
+  .glass, .glass-strong, .glass-dark, .glass-bar { -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem; /* 15px body */
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+h1, h2, h3, .tight {
+  letter-spacing: -0.02em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-action);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* The one motion moment: a new item arrives because something happened. */
+@keyframes arrive {
+  from { background-color: var(--color-action-tint); }
+  to   { background-color: var(--surface-strong); }
+}
+.arrive { animation: arrive 2.4s ease-out; }
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.toast-in { animation: toast-in 0.2s ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

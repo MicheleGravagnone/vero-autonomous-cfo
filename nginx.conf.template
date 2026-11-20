@@ -1,0 +1,20 @@
+server {
+  listen 8080;
+  root /usr/share/nginx/html;
+
+  # Frontend calls /api/... ; forward to the backend and strip the /api prefix.
+  location /api/ {
+    proxy_pass ${BACKEND_URL}/;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header Connection "";
+    # Server-Sent Events: don't buffer, keep the stream open
+    proxy_buffering off;
+    proxy_cache off;
+    proxy_read_timeout 1h;
+  }
+
+  location / {
+    try_files $uri /index.html;
+  }
+}
