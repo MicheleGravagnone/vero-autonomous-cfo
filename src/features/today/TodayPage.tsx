@@ -4,7 +4,7 @@ import { useLive } from "../../api/live";
 import { Icon } from "../../components/Icon";
 import { agentName } from "../../lib/labels";
 import { formatDate, formatEurWhole } from "../../lib/format";
-import { CashChart, ChartLegend } from "../cash/CashChart";
+import { CashChart, ForecastLegend } from "../cash/CashChart";
 import { btnPrimary, btnQuiet, cardId, DecisionCard, useDecide } from "./DecisionCard";
 import { DoneList } from "./DoneList";
 
@@ -265,12 +265,7 @@ export function TodayPage() {
                 {company ? formatEurWhole(company.cashTodayEur) : "—"}
               </p>
             </div>
-            <ChartLegend
-              bufferEur={company?.safetyBufferEur}
-              actuals={actuals}
-              overdraftLimitEur={f?.overdraftLimitEur}
-              compareLabel={actuals ? `Forecast on ${formatDate(f!.madeOn)}` : undefined}
-            />
+            <ForecastLegend bufferEur={company?.safetyBufferEur} />
           </div>
           <div className="-mx-1 mt-2">
             {forecast.isError && (
@@ -278,10 +273,11 @@ export function TodayPage() {
             )}
             {f ? (
               <CashChart
+                days={f.days}
                 weeks={f.weeks}
+                bufferEur={company?.safetyBufferEur ?? f.weeks[0]?.bufferEur ?? 0}
+                today={company?.asOf ?? f.madeOn}
                 lowest={{ value: f.lowestBalanceEur, date: f.lowestDate, week: f.lowestWeek }}
-                overdraftLimitEur={f.overdraftLimitEur}
-                compareLabel={`Forecast on ${formatDate(f.madeOn)}`}
               />
             ) : (
               !forecast.isError && <div className="mt-4 h-[300px] animate-pulse rounded-xl bg-on-hero/5 sm:h-[380px]" />

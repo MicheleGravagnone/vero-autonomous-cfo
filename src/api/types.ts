@@ -191,12 +191,21 @@ export interface ForecastWeek {
   forecastEur?: Eur;
 }
 
+/** One day of the 91-day forecast: closing balance, and from "today" on the likely range around it. */
+export interface ForecastDay {
+  date: ISODate;
+  balanceEur: Eur;           // closing balance (actual before the demo date, forecast from it on)
+  lowEur?: Eur;              // likely range, only for forecast days
+  highEur?: Eur;
+}
+
 export interface Forecast {
   generatedAt: ISODateTime;
   madeOn: ISODate;           // the demo date the forecast was computed on
   horizonDays: number;       // 91
   startingBalanceEur: Eur;
   weeks: ForecastWeek[];     // 13 entries
+  days: ForecastDay[];       // 91 entries, one per day, same horizon as `weeks`
   firstShortDate?: ISODate;  // first week that closes below zero, if any
   lowestBalanceEur: Eur;     // lowest daily balance in the horizon
   lowestDate: ISODate;

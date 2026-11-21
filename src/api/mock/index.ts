@@ -18,6 +18,7 @@ import type {
   DecisionAction,
   DemoScenario,
   Forecast,
+  ForecastDay,
   ForecastWeek,
   LeaseCheck,
   Policy,
@@ -106,12 +107,22 @@ function makeForecast(): Forecast {
     );
   }
   const short = weeks.find((w) => w.balanceEur < 0);
+  // Daily balances: actual before the demo date, forecast from it on, with a likely range that widens
+  // by €90 a day from €600 (demo range, computed here, never by the model).
+  const actual = asOf > MADE_ON ? dailyBalances(MADE_ON, addDays(MADE_ON, 90), TXNS.filter((t) => t.date >= MADE_ON), opening) : null;
+  const todayIdx = Math.max(0, low.series.findIndex((d) => d.date === asOf));
+  const days: ForecastDay[] = low.series.map((d, i) => {
+    if (i < todayIdx) return { date: d.date, balanceEur: actual ? actual[i].balance : d.balance };
+    const spread = 600 + 90 * (i - todayIdx);
+    return { date: d.date, balanceEur: d.balance, lowEur: round2(d.balance - spread), highEur: round2(d.balance + spread) };
+  });
   return {
     generatedAt: nowIso(),
     madeOn: MADE_ON,
     horizonDays: 91,
     startingBalanceEur: opening,
     weeks,
+    days,
     firstShortDate: short?.startDate,
     lowestBalanceEur: low.balance,
     lowestDate: low.date,

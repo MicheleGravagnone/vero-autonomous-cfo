@@ -6,7 +6,7 @@ import { AutonomyBadge, ExecutionBadge } from "../../components/Badges";
 import { Icon } from "../../components/Icon";
 import { useToast } from "../../components/Toast";
 import { formatDate, formatEur, formatEurWhole, formatLongDate } from "../../lib/format";
-import { CashChart, ChartLegend } from "../cash/CashChart";
+import { WeeklyCashChart, WeeklyChartLegend } from "../cash/CashChart";
 import { btnPrimary } from "../today/DecisionCard";
 import { ModelLine } from "../today/Reasoning";
 
@@ -140,8 +140,8 @@ function ContractResult({ sim }: { sim: ContractSimulation }) {
           staff first, so your lowest point becomes {formatEurWhole(sim.minBalanceEur)} in W{sim.valleyWeek}.
         </p>
         <div className="liquid-glass liquid-navy mt-4 space-y-3 rounded-3xl p-5 text-on-hero sm:p-6">
-          <ChartLegend compareLabel="Without this contract" />
-          <CashChart
+          <WeeklyChartLegend compareLabel="Without this contract" />
+          <WeeklyCashChart
             weeks={sim.withContract}
             compareWeeks={sim.baseline}
             compareLabel="Without this contract"
@@ -154,8 +154,8 @@ function ContractResult({ sim }: { sim: ContractSimulation }) {
         <h2 id="fix-h" className="text-lg font-semibold tracking-tight">How to make it safe</h2>
         <p className="mt-2 max-w-[70ch] text-sm">{sim.suggestion}</p>
         <div className="liquid-glass liquid-navy mt-4 space-y-3 rounded-3xl p-5 text-on-hero sm:p-6">
-          <ChartLegend compareLabel="As written" />
-          <CashChart
+          <WeeklyChartLegend compareLabel="As written" />
+          <WeeklyCashChart
             weeks={sim.withSuggestion}
             compareWeeks={sim.withContract}
             compareLabel="As written"

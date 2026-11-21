@@ -16,6 +16,13 @@ export const formatEurShort = (value: number) => {
   return `${sign}€${k >= 10 || Number.isInteger(k) ? Math.round(k) : k.toFixed(1)}k`;
 };
 
+/** One decimal in thousands for ranges: −24363 → "−€24.4k", 950 → "€950". */
+export const formatEurK1 = (value: number) => {
+  const abs = Math.abs(value);
+  const sign = value < 0 ? "−" : "";
+  return abs < 1000 ? `${sign}€${Math.round(abs)}` : `${sign}€${(abs / 1000).toFixed(1)}k`;
+};
+
 /** "2025-04-14" → "14 Apr" */
 export const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });

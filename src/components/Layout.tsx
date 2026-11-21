@@ -52,7 +52,7 @@ function NavTabs() {
       aria-label="Main"
       className="liquid-glass-pill col-span-2 row-start-2 flex gap-1 justify-self-start overflow-x-auto rounded-full p-1 max-lg:max-w-full lg:col-span-1 lg:row-start-1 lg:col-start-2"
     >
-      <span ref={pillRef} aria-hidden="true" className="nav-pill btn-primary pill-recessed absolute left-0 top-1 h-10 rounded-full opacity-0" />
+      <span ref={pillRef} aria-hidden="true" className="nav-pill btn-primary nav-active absolute left-0 top-1 h-10 rounded-full opacity-0" />
       <NavLink to="/" end className={navClass}>Overview</NavLink>
       <NavLink to="/contract" className={navClass}>Contract check</NavLink>
       <NavLink to="/costs" className={navClass}>Cost changes</NavLink>
@@ -92,8 +92,9 @@ export function Layout() {
         Skip to content
       </a>
 
-      <header className="glass-1-bar sticky top-0 z-30">
-        <div className="mx-auto grid max-w-6xl grid-cols-[1fr_auto] items-center gap-y-2 px-4 py-3 sm:px-8 lg:min-h-20 lg:grid-cols-[1fr_auto_1fr] lg:py-5">
+      <header className="sticky top-3 z-40 mx-3 mt-3 sm:mx-6">
+        <div className="nav-glass mx-auto max-w-6xl">
+        <div className="mx-auto grid max-w-6xl grid-cols-[1fr_auto] items-center gap-y-2 px-4 py-2 sm:px-8 lg:grid-cols-[1fr_auto_1fr]">
           <div className="flex items-center gap-2 lg:pr-4">
             <Wordmark className="text-[24px]" />
           </div>
@@ -123,6 +124,7 @@ export function Layout() {
               <span className="sr-only">{connectionText[connection]}</span>
             </span>
           </div>
+        </div>
         </div>
       </header>
 
