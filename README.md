@@ -46,11 +46,10 @@ These were captured from the live OpenShift deployment on 22 November 2026, afte
 
 | Who | Role | Main areas |
 |---|---|---|
-| **Michele Gravagnone** (me) | Backend | `services/api`: the financial engine, rules, investigations and storage (details below) |
-| Ege Enç | AI service | `services/ai`: model client, prompts, the agent loops, PDF extraction, the owner chat |
-| Omar Abbass | Frontend | `apps/web`: the React owner interface |
-| Furkan Kılboz | DevOps | `deploy/openshift`: cluster deployment, GPU model serving, Tekton pipelines, MLflow, CI |
-| Alperen | Testing | Test reports against the challenge criteria |
+| **Michele** (me) | Backend | `services/api`: the financial engine, rules, investigations and storage (details below) |
+| Ege, Ibrahim | AI service | `services/ai`: model client, prompts, the agent loops, PDF extraction, the owner chat |
+| Omar, Khaled | Frontend | `apps/web`: the React owner interface |
+| Furkan | DevOps | `deploy/openshift`: cluster deployment, GPU model serving, Tekton pipelines, MLflow, CI |
 
 ### My part: the backend
 
