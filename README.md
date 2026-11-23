@@ -4,7 +4,7 @@ Vero forecasts a small business's cash for the next 13 weeks, checks every recur
 
 Built at **Collabothon 2026** for the **Commerzbank × Red Hat "Autonomous CFO" challenge** by team **Hold My Laptop**. The demo runs on Red Hat OpenShift AI with an open-weights model (Qwen3-8B FP8 served by vLLM). This repository is my personal copy of the team's repository ([hold-my-laptop/autonomous-cfo](https://github.com/hold-my-laptop/autonomous-cfo)), with the full history of every contributor.
 
-![Vero overview: 13-week cash forecast for Pizzeria Amalfi](docs/screenshots/overview.webp)
+![Vero overview: 13-week cash forecast for Pizzeria Amalfi](assets/overview.webp)
 
 ## The idea
 
@@ -23,23 +23,23 @@ These were captured from the live OpenShift deployment on 22 November 2026, afte
 
 **The investigation.** At step 5 the agent computed with the wrong index month (0.00%). The backend's evidence check rejected that answer, and Vero's own steps (6–9) reached the correct 3.06%.
 
-![How Vero found out: the agent's look-ups, then Vero's own steps, ending in a €304/month conflict](docs/screenshots/investigation.webp)
+![How Vero found out: the agent's look-ups, then Vero's own steps, ending in a €304/month conflict](assets/investigation.webp)
 
 **The evidence.** Each claim points at the highlighted passage in the landlord's notice and in the lease.
 
-![Evidence: the notice and lease §4.2 side by side with highlights](docs/screenshots/evidence.webp)
+![Evidence: the notice and lease §4.2 side by side with highlights](assets/evidence.webp)
 
 **Prepared actions.** The owner approves or declines. Execution is simulated.
 
-![What changes downstream and the two prepared actions](docs/screenshots/prepared-actions.webp)
+![What changes downstream and the two prepared actions](assets/prepared-actions.webp)
 
 | | |
 |---|---|
-| ![Cost changes page](docs/screenshots/cost-check.webp) | ![Decisions that need the owner's OK](docs/screenshots/decisions.webp) |
+| ![Cost changes page](assets/cost-check.webp) | ![Decisions that need the owner's OK](assets/decisions.webp) |
 | Cost changes: one change needs the owner, three are handled quietly | Decisions waiting for the owner, each with "How did you decide?" |
-| ![Suggestions](docs/screenshots/suggestions.webp) | ![Activity log](docs/screenshots/activity.webp) |
+| ![Suggestions](assets/suggestions.webp) | ![Activity log](assets/activity.webp) |
 | Suggestions the owner can ignore | The sealed activity log |
-| ![Dark mode](docs/screenshots/overview-dark.webp) | ![Mobile](docs/screenshots/mobile.webp) |
+| ![Dark mode](assets/overview-dark.webp) | ![Mobile](assets/mobile.webp) |
 | Dark mode | Phone width |
 
 ## Team and contributions
@@ -53,7 +53,7 @@ These were captured from the live OpenShift deployment on 22 November 2026, afte
 
 ### My part: the backend
 
-I designed and built the FastAPI backend (`services/api`), which owns the data, the domain logic and every number the product shows. I also wrote the Phase 2 design ([docs/PROOF.md](docs/PROOF.md)) and the backend spec ([docs/BACKEND.md](docs/BACKEND.md)), and kept the AI service contract ([docs/contracts](docs/contracts)) in sync with the AI team.
+I designed and built the FastAPI backend (`services/api`), which owns the data, the domain logic and every number the product shows. I also wrote the Phase 2 design and the backend spec, and kept the API contract with the AI team in sync.
 
 **Vero Cash**
 - **Forecast:** imports the bank statement, detects recurring payments, models revenue and builds a 91-day cash forecast, with a backtest error of €663 (3%) ([`domain/forecast.py`](services/api/src/api/domain/forecast.py), [`recurring.py`](services/api/src/api/domain/recurring.py), [`backtest.py`](services/api/src/api/domain/backtest.py)).
@@ -91,7 +91,7 @@ React web app ──► FastAPI backend ◄──► AI service (agent loops, ex
                   data · forecast · rules · formula engine · grounding · PostgreSQL     Qwen3-8B FP8
 ```
 
-The AI service calls only read-only tools on the backend's internal API, which is not exposed outside the cluster. The rules check and execution are never tools. More detail: [Architecture overview](docs/ARCHITECTURE_OVERVIEW.md) · [Architecture](docs/ARCHITECTURE.md) · [Design and demo numbers](docs/DESIGN.md) · [AI service](docs/AI_SERVICE.md) · [OpenShift](docs/OPENSHIFT.md).
+The AI service calls only read-only tools on the backend's internal API, which is not exposed outside the cluster. The rules check and execution are never tools. The public API contract is [services/api/openapi.json](services/api/openapi.json).
 
 | Component | Technology |
 | --- | --- |
@@ -129,7 +129,6 @@ uv run fastapi dev
 | [apps/web](apps/web) | Owner interface and browser mocks |
 | [deploy/openshift](deploy/openshift) | Deployments, GPU model serving, Tekton pipelines |
 | [notebooks](notebooks) | Cash-flow analysis, model benchmarks, agent evaluation |
-| [docs](docs) | Design, architecture, contracts, Proof design, screenshots |
 
 ## Honest limits
 

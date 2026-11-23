@@ -1,6 +1,6 @@
 """Export the public API schema for the frontend to generate types from.
 
-`uv run python -m api.openapi` writes docs/contracts/openapi.json; with `--check` it only
+`uv run python -m api.openapi` writes services/api/openapi.json; with `--check` it only
 reports whether the file is out of date (exit code 1)."""
 
 import json
@@ -9,7 +9,7 @@ import sys
 from api.config import REPO_ROOT, Settings
 from api.main import create_app
 
-SCHEMA_PATH = REPO_ROOT / "docs" / "contracts" / "openapi.json"
+SCHEMA_PATH = REPO_ROOT / "services" / "api" / "openapi.json"
 
 
 def render() -> str:

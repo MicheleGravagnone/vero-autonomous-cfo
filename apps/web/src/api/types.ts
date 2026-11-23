@@ -1,5 +1,5 @@
 /**
- * Frontend data shapes. The real backend contract is docs/contracts/openapi.json (services/api);
+ * Frontend data shapes. The real backend contract is services/api/openapi.json (services/api);
  * in live mode adapters.ts maps it onto these types (see the mapping at the bottom of this file).
  * CFO types use camelCase JSON; the Vero cost-check types (Finding & co.) use snake_case on purpose,
  * they mirror the agent's Finding schema one-to-one.

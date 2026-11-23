@@ -1,5 +1,5 @@
 /**
- * Wire shapes of the real backend (services/api, docs/contracts/openapi.json), only the parts the UI reads.
+ * Wire shapes of the real backend (services/api, services/api/openapi.json), only the parts the UI reads.
  * Money is a string of integer cents ("123456" = €1,234.56); dates are ISO strings.
  * adapters.ts turns these into the UI types in types.ts.
  */
