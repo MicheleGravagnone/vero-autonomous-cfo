@@ -123,6 +123,7 @@ def replace_settings(**changes) -> Settings:
     return Settings(**(settings.model_dump() | changes))
 
 
+@needs_sample
 def test_in_memory_write_is_rolled_back_on_error() -> None:
     repository = InMemoryStateRepository(settings)
     repository.start()

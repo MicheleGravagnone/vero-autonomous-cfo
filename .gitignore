@@ -2,7 +2,7 @@
 local/
 .agents/
 .claude/
-data/*.csv
+data/
 
 # Environment / secrets
 .env
