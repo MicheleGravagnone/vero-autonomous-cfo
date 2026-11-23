@@ -86,10 +86,9 @@ I designed and built the FastAPI backend (`services/api`), which owns the data, 
 
 ## Architecture
 
-```
-React web app ──► FastAPI backend ◄──► AI service (agent loops, extraction, chat) ──► vLLM on OpenShift AI
-                  data · forecast · rules · formula engine · grounding · PostgreSQL     Qwen3-8B FP8
-```
+![Vero architecture, sketched by hand: the browser reaches nginx on Red Hat OpenShift, which routes to the FastAPI backend and the AI service; the AI service calls vLLM on OpenShift AI and sends traces to MLflow; the backend stores data in PostgreSQL](assets/architecture.png)
+
+*Architecture, sketched by hand.*
 
 The AI service calls only read-only tools on the backend's internal API, which is not exposed outside the cluster. The rules check and execution are never tools. The public API contract is [services/api/openapi.json](services/api/openapi.json).
 
